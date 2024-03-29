@@ -1,4 +1,6 @@
-﻿header
+﻿@use '../abstracts/colors' as abstracts
+
+header
   margin-top: 3rem
   margin-bottom: 3rem
 
@@ -6,3 +8,7 @@
   min-height: 100vh
   display: flex
   flex-direction: column
+
+.app-wrapper
+  background-image: abstracts.$bg-gradient
+  color: abstracts.$text-color
