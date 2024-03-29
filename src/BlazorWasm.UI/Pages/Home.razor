@@ -1,0 +1,58 @@
+﻿@page "/"
+@using POC_AnotherType.Components
+@inherits HomeBase
+
+<PageTitle>Home</PageTitle>
+
+<div class="words-area" tabindex="0"
+     @ref="InputDiv"
+     @onkeydown="HandleLetter"
+     @onmousemove="() => TypingSession.IsTyping = true"
+     @onfocusout="OnFocusOut"
+     @onfocusin="() => TypingSession.IsFocus = true">
+
+    @if (!TypingSession.IsFinish)
+    {
+        @if (TypingSession.IsFocus && Display)
+        {
+            <div class="caret @(TypingSession.IsTyping ? "caret-animation" : "") @(TypingSession.IsCursorValid ? "" : "error")" style="@TypingSession.StyleCaret"></div>
+        }
+        else
+        {
+            <div class="focus-out">Merci de cliquer pour reprendre le focus</div>
+        }
+    }
+    else
+    {
+        <div class="focus-out metrics">
+            <Metric 
+                Title="Vitesse"
+                Result="@GetWpm()"
+                IconClass="speedometer2" />
+            
+            <Metric 
+                Title="Précision"
+                Result="@GetAcc()"
+                IconClass="crosshair" />
+        </div>
+    }
+
+    @if (Display)
+    {
+        <div class="fade-in">
+            @foreach (var letter in TypingSession.Letters)
+            {
+                <span class="@letter.Status.ToString().ToLower() @(!TypingSession.IsFocus || TypingSession.IsFinish ? "blur" : "")">
+                    @letter.Character
+                </span>
+            }  
+        </div>
+    }
+
+</div>
+
+<div class="action" style="margin-top:3rem">
+    <button @onmousedown="Restart" class="btn-icon">
+        <i class="bi bi-arrow-repeat"></i>
+    </button>
+</div>

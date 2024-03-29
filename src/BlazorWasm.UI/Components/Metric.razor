@@ -1,0 +1,10 @@
+﻿<div class="metric">
+    <div class="metric__title"><i class="bi bi-@(IconClass)"></i> @Title</div>
+    <div class="metric__result">@Result</div>
+</div>
+
+@code {
+    [Parameter] public string IconClass { get; set; } = null!;
+    [Parameter] public string Title { get; set; } = null!;
+    [Parameter] public string Result { get; set; } = null!;
+}
